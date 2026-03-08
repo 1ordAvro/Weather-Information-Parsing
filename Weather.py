@@ -5,14 +5,15 @@ import csv
 import time
 
 load_dotenv()
+
 MY_KEY = os.getenv("API_KEY")
+headers = ["Name", "Country", "Timezone", "Weather", "Weather Desc.", "Temp (Deg. C)", "Wind Speed (Km/h)"]
+locations = ["Barrackpore,WestBengal,India", "Udaipur,Rajasthan,India", "Noida,Delhi,India", "Leh,Ladakh,India", "Guwahati,Assam,India"]
+
 
 with open("weather_details.csv", "w") as wd_file:
-    headers = ["Name", "Country", "Timezone", "Weather", "Weather Desc.", "Temp (Deg. C)", "Wind Speed (Km/h)"]
     csv_writer = csv.DictWriter(wd_file, fieldnames=headers, delimiter=",")
     csv_writer.writeheader()
-
-locations = ["Barrackpore,WestBengal,India", "Udaipur,Rajasthan,India", "Noida,Delhi,India", "Leh,Ladakh,India", "Guwahati,Assam,India"]
 
 for loc in locations:
     payload = {
