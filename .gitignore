@@ -11,3 +11,9 @@ wheels/
 
 # env files
 .env
+
+# log files
+*.log
+
+# output files
+*.csv
