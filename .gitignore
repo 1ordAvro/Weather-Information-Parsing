@@ -10,10 +10,8 @@ wheels/
 .venv
 
 # env files
-.env
+env/
 
-# log files
-*.log
-
-# output files
-*.csv
+# others
+logs/
+output/
