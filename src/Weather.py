@@ -29,7 +29,7 @@ class Weather_Details:
         self.request_to_api(sl)
 
     def check_storage(self):
-        file_exist = Path(f"{self.csv_file}").is_file()
+        file_exist = self.csv_file.is_file()
 
         if not file_exist:
             with open(self.csv_file, "w") as wd_file:
