@@ -43,8 +43,7 @@ class Weather_Details:
         with open(self.csv_file, "r") as wd_file:
             rows = list(csv.reader(wd_file))
 
-        if len(rows) > 1:
-            return int(rows[-1][0])
+        return int(rows[-1][0]) if len(rows) > 1 else 0
 
     def request_to_api(self, sl):
         for i, loc in enumerate(self.locations, start=sl + 1):
@@ -52,13 +51,15 @@ class Weather_Details:
 
             try:
                 req = requests.get(
-                    "https://api.openweathermap.org/data/2.5/weather", params=payload
+                    "https://api.openweathermap.org/data/2.5/weather",
+                    params=payload,
+                    timeout=10,
                 )
             except requests.exceptions.ConnectionError as e:
                 self.logger.log_critical(f"Connection failed for {loc}: {e}")
             except requests.exceptions.Timeout as e:
                 self.logger.log_critical(f"Connection timeout for {loc}: {e}")
-            except requests.exceptions as e:
+            except requests.exceptions.RequestException as e:
                 self.logger.log_critical(f"Error occuered for {loc}: {e}")
             else:
                 self.store_data(req, i, loc)
@@ -110,4 +111,3 @@ if __name__ == "__main__":
         "Guwahati,Assam,India",
     ]
     wd = Weather_Details(locations)
-
